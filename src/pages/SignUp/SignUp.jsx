@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import image from "../../assets/login.jpg";
 import { useForm } from "react-hook-form";
+import useAuth from "./../../hooks/useAuth";
+import toast from "react-hot-toast";
 const SignUp = () => {
+  const { createUser, handleUpdateProfile ,user} = useAuth();
   const {
     register,
     handleSubmit,
@@ -10,7 +13,13 @@ const SignUp = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
+    createUser(data.email, data.password).then(() => {
+      handleUpdateProfile(data.name, data.photo).then(() => {
+        toast.success("User Create Successfully");
+      });
+    });
   };
+  console.log(user)
   return (
     <div className="flex gap-4 p-3">
       <div className="card shrink-0 w-full max-w-md mx-auto shadow-2xl bg-base-100">
@@ -50,6 +59,7 @@ const SignUp = () => {
               <input
                 className="input input-bordered"
                 placeholder="Your password"
+                type="password"
                 {...register("password", { required: true })}
               />
               {errors.password && <span>Please enter password</span>}
