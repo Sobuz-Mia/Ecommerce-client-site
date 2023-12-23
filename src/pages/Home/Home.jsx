@@ -1,8 +1,11 @@
+import FeatureProduct from "../../components/FeatureProduct/FeatureProduct";
+import Banner from "./Banner";
 
 const Home = () => {
     return (
-        <div>
-          This is home page  
+        <div className="">
+          <Banner/>
+          <FeatureProduct/>
         </div>
     );
 };
