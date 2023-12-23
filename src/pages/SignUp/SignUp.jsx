@@ -1,25 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import image from "../../assets/login.jpg";
 import { useForm } from "react-hook-form";
 import useAuth from "./../../hooks/useAuth";
 import toast from "react-hot-toast";
 const SignUp = () => {
-  const { createUser, handleUpdateProfile ,user} = useAuth();
+  const { createUser, handleUpdateProfile } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    // reset,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
     createUser(data.email, data.password).then(() => {
       handleUpdateProfile(data.name, data.photo).then(() => {
+        reset()
         toast.success("User Create Successfully");
+        navigate('/')
       });
     });
   };
-  console.log(user)
+ 
   return (
     <div className="flex gap-4 p-3">
       <div className="card shrink-0 w-full max-w-md mx-auto shadow-2xl bg-base-100">

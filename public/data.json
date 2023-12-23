@@ -1,38 +1,34 @@
 [
   {
-    "id": 1,
     "title": "Short straight coat",
     "image": "https://i.ibb.co/DQXrb9S/brunette-young-model-transperent-sunglasses-walk-outside-autumn-day.jpg",
     "variations": [
-      { "id": 1, "color": "Off White", "size": "Small" },
-      { "id": 2, "color": "Blue", "size": "Medium" }
+      { "id": 1, "color": "Off White", "size": ["S", "XL", "XXL"] },
+      { "id": 2, "color": "Yellow", "size": ["S", "XL", "L"] }
     ]
   },
   {
-    "id": 2,
     "title": "Long sleeve checked shirt",
     "image": "https://i.ibb.co/2d0Lxq4/front-view-man-talking-phone.jpg",
     "variations": [
-      { "id": 3, "color": "Black & white", "size": "Large" },
-      { "id": 4, "color": "Yellow", "size": "Medium" }
+      { "id": 3, "color": "Black & white", "size": ["S", "L", "XXL"] },
+      { "id": 4, "color": "Blue", "size": ["L", "XL", "3XL"] }
     ]
   },
   {
-    "id": 3,
     "title": "Joggers with mesh detail",
     "image": "https://i.ibb.co/0h4pGpc/beautiful-young-caucasian-female-green-sport-suit-black-sneakers-goes-walk-city.jpg",
     "variations": [
-      { "id": 5, "color": "Grayish Green", "size": "Small" },
-      { "id": 6, "color": "White", "size": "Large" }
+      { "id": 5, "color": "Grayish Green", "size": ["L", "XL", "XXL"] },
+      { "id": 6, "color": "White", "size": ["S", "XL", "M"] }
     ]
   },
   {
-    "id": 4,
     "title": "Men’s smart white shoes",
     "image": "https://i.ibb.co/WGgS3Cp/new-pair-white-sneakers-isolated-white.jpg",
     "variations": [
-      { "id": 7, "color": "White", "size": "Medium" },
-      { "id": 8, "color": "Black", "size": "Small" }
+      { "id": 7, "color": "White", "size": ["S", "L", "XXL"] },
+      { "id": 8, "color": "Black", "size": ["S", "L", "XL"] }
     ]
   }
 ]

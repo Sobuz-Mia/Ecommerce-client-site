@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
 import login from "../../assets/login.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 const Login = () => {
+  const {loggedInUser} = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -9,6 +13,10 @@ const Login = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
+    loggedInUser(data.email,data.password).then(()=>{
+      toast.success("Log in successfully")
+      navigate('/')
+    })
   };
   return (
     <div className="flex gap-4 p-3">
@@ -25,7 +33,7 @@ const Login = () => {
               <label className="label">
                 <span className="label-text">Your Password</span>
               </label>
-              <input className="input input-bordered" placeholder="Your password" {...register("password",{required:true})} />
+              <input className="input input-bordered" type="password" placeholder="Your password" {...register("password",{required:true})} />
               {errors.password && <span>Please enter password</span>}
             </div>
             <label className="label">
