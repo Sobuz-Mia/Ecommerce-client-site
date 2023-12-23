@@ -11,7 +11,7 @@ const FeatureProduct = () => {
   return (
     <div>
       <h1 className="text-5xl text-center my-5">Featured Products</h1>
-      <div className="grid lg:grid-cols-4">
+      <div className="grid lg:grid-cols-4" id="product">
         {data.map((item) => (
           <ProductCard item={item} key={item.id}></ProductCard>
         ))}
