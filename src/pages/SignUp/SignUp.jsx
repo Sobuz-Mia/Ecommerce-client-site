@@ -3,8 +3,10 @@ import image from "../../assets/login.jpg";
 import { useForm } from "react-hook-form";
 import useAuth from "./../../hooks/useAuth";
 import toast from "react-hot-toast";
+import axios from "axios";
 const SignUp = () => {
-  const { createUser, handleUpdateProfile } = useAuth();
+  const { createUser, handleUpdateProfile, loggedOut } = useAuth();
+
   const navigate = useNavigate();
   const {
     register,
@@ -13,16 +15,27 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
-    createUser(data.email, data.password).then(() => {
-      handleUpdateProfile(data.name, data.photo).then(() => {
-        reset()
-        toast.success("User Create Successfully");
-        navigate('/')
-      });
+    createUser(data.email, data.password).then((result) => {
+      if (result.user) {
+        handleUpdateProfile(data.name, data.photo).then(() => {
+          const userInfo = {
+            email: data.email,
+            password: data.password,
+          };
+          axios.post("https://e-commerce-server-site-orpin.vercel.app/user", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              reset();
+              loggedOut().then(() => {
+                toast.success("User Create Successfully");
+                navigate("/login");
+              });
+            }
+          });
+        });
+      }
     });
   };
- 
+
   return (
     <div className="flex gap-4 p-3">
       <div className="card shrink-0 w-full max-w-md mx-auto shadow-2xl bg-base-100">

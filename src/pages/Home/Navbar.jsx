@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { user, loggedOut } = useAuth();
@@ -10,7 +12,7 @@ const Navbar = () => {
         <NavLink to={"/"}>Home</NavLink>
       </li>
       <li>
-        <NavLink to={"/product-page"}>Product page</NavLink>
+        <a href="#product">Product page</a>
       </li>
       <li>
         <NavLink to={"/about"}>About</NavLink>
@@ -20,11 +22,20 @@ const Navbar = () => {
       </li>
     </>
   );
-  const handleSignOut = () =>{
-    loggedOut().then(()=>{
-      toast.success("Log out Successfully")
-    })
-  }
+  const handleSignOut = () => {
+    loggedOut().then(() => {
+      toast.success("Log out Successfully");
+    });
+  };
+  const { data } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const res = await axios.get(
+        `https://e-commerce-server-site-orpin.vercel.app/carts/data?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
   return (
     <div className="navbar bg-base-100 max-w-6xl mx-auto">
       <div className="flex-1">
@@ -50,12 +61,14 @@ const Navbar = () => {
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              <span className="badge badge-md mr-10 indicator-item">8</span>
+              <span className="badge badge-md mr-10 indicator-item">
+                {data && data?.length}
+              </span>
             </div>
           </div>
         </div>
         <div className="dropdown dropdown-end">
-          {user ? (
+          {user && user ? (
             <>
               <div
                 tabIndex={0}
@@ -65,7 +78,7 @@ const Navbar = () => {
                 <div className="w-10 rounded-full">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src={user?.photoURL}
+                    src={user && user?.photoURL}
                   />
                 </div>
               </div>

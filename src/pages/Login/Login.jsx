@@ -4,19 +4,24 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 const Login = () => {
-  const {loggedInUser} = useAuth();
+  const { loggedInUser } = useAuth();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-    loggedInUser(data.email,data.password).then(()=>{
-      toast.success("Log in successfully")
-      navigate('/')
-    })
+  const onSubmit = async(data) => {
+    loggedInUser(data.email, data.password)
+      .then(() => {
+        toast.success("Log in successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        if (error) {
+          toast.error("Invalid email or Password");
+        }
+      });
   };
   return (
     <div className="flex gap-4 p-3">
@@ -27,13 +32,22 @@ const Login = () => {
             <label className="label">
               <span className="label-text">Your Email</span>
             </label>
-            <input className="input input-bordered" placeholder="Your email" {...register("email",{required:true})} />
+            <input
+              className="input input-bordered"
+              placeholder="Your email"
+              {...register("email", { required: true })}
+            />
             {errors.email && <span>Email is required</span>}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Your Password</span>
               </label>
-              <input className="input input-bordered" type="password" placeholder="Your password" {...register("password",{required:true})} />
+              <input
+                className="input input-bordered"
+                type="password"
+                placeholder="Your password"
+                {...register("password", { required: true })}
+              />
               {errors.password && <span>Please enter password</span>}
             </div>
             <label className="label">
@@ -43,7 +57,9 @@ const Login = () => {
             </label>
           </div>
           <div className="form-control mt-6">
-            <button className="btn bg-[#FFC801] text-xl font-bold text-white">Login</button>
+            <button className="btn bg-[#FFC801] text-xl font-bold text-white">
+              Login
+            </button>
           </div>
           <div className="text-center">
             <p className="mt-4">

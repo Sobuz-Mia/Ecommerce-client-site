@@ -1,16 +1,32 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const {user} = useAuth();
   const [product, setProduct] = useState({});
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/product/?id=${id}`)
+      .get(`https://e-commerce-server-site-orpin.vercel.app/product/?id=${id}`)
       .then((res) => setProduct(res.data));
   }, [id]);
-  console.log(product?.variations);
+  const handleAddToCard = () =>{
+    const productInfo = {
+        image:product.image,
+        title:product.title,
+        userEmail:user?.email,
+        variation:product.variations
+    }
+   
+    axios.post('https://e-commerce-server-site-orpin.vercel.app/add-product',productInfo).then(res=>{
+        if(res.data.insertedId){
+            toast.success("Successfully Added to Cart")
+        }
+    })
+  }
   return (
     <div className="container mx-auto my-8">
     <div className="flex">
@@ -36,7 +52,7 @@ const ProductDetail = () => {
               </div>
             </div>
           ))}
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <button onClick={handleAddToCard} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
           Add to Cart
         </button>
       </div>

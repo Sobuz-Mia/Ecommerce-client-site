@@ -6,7 +6,7 @@ const FeatureProduct = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/products")
+      .get("https://e-commerce-server-site-orpin.vercel.app/products")
       .then((res) => setData(res.data));
   }, []);
 
